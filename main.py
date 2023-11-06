@@ -34,7 +34,7 @@ def index():
             <script>
                 let roll_call =new Map([
     '''
-    with open("data.json", "r") as fb:
+    with open("data.json", "r", encoding="utf-8") as fb:
         try:
             data = json.loads(fb.read())
         except:
