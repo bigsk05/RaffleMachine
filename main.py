@@ -35,7 +35,10 @@ def index():
                 let roll_call =new Map([
     '''
     with open("data.json", "r") as fb:
-        data = json.loads(fb.read())
+        try:
+            data = json.loads(fb.read())
+        except:
+            data = {}
     
     for d in data.keys():
         page += '["{}", "{}"],'.format(d, data[d])
