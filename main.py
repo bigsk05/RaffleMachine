@@ -27,12 +27,12 @@ def index():
                 .center-v{
                     position: absolute;
                     top: 50%;
-                    left: 50%;
+                    left: 30%;
                     transform: translateY(-50%) translateX(-50%);
                 }
             </style>
             <script>
-                let roll_call =new Map([
+                let roll_call = new Map([
     '''
     with open("data.json", "r", encoding="utf-8") as fb:
         try:
@@ -49,13 +49,26 @@ def index():
         </head>
         <body>
             <div class="container" id="app">
-                <div class="text-center">
-                    <br>
-                    <h1>看看是谁这么幸运？</h1>
-                    <div class="center-v">
-                        <span v-html="result"></span>
+                <div class="row">
+                    <div class="col-md-offset-11">
+                        <br>
+                        <h2>看看是谁这么幸运？</h2>
+                        <div class="center-v">
+                            <span v-html="result"></span>
+                        </div>
                     </div>
-                    <div class="fixed-bottom">   
+                    <div class="col-md-offset-1">
+                        <br>
+                        <h4>&nbsp;&nbsp;中奖列表：</h4>
+                        <strong>
+                            <ol v-html="list">
+                            </ol>
+                        </strong>
+                    </div>
+                </div>
+                <div class="fixed-bottom">
+                    <div class="col-md-offset-8">
+                        &nbsp;&nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                         <button class="btn btn-primary" @click="clickButton">{{button_text}}</button>
                         &nbsp;&nbsp;
                         <button class="btn btn-danger" onclick="location.reload();">刷新页面</button>
@@ -72,12 +85,24 @@ def index():
                     status: false,
                     button_text: "开始抽奖",
                     selected: "",
+                    priced: new Map(),
+                    list: "<li>暂无中奖记录</li>",
                 },
                 methods: {
                     clickButton () {
                         if (this.status) {
                             clearInterval(this.timer);
-                            roll_call.delete(this.selected);
+
+                            if (roll_call.get(this.selected)) {
+                                this.priced.set(this.selected, roll_call.get(this.selected));
+                                this.list = "";
+                                Array.from(this.priced.keys()).forEach(element => {
+                                    this.list += "<li>" + this.priced.get(element) + "</li>";
+                                });
+                                console.log(this.priced);
+                                roll_call.delete(this.selected);
+                            }
+
                             this.button_text = "开始抽奖";
                             this.status = false;
                         } else {
@@ -122,8 +147,8 @@ def main():
     webview.create_window(
         title="抽奖程序",
         url=app,
-        width = 500,
-        height = 500,
+        width = 700,
+        height = 400,
         resizable = False,
         text_select = False,
     )
