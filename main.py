@@ -25,10 +25,9 @@ def index():
             <script src="static/vue"></script>
             <style>
                 .center-v{
-                    position: absolute;
-                    top: 50%;
-                    left: 30%;
-                    transform: translateY(-50%) translateX(-50%);
+                    position: sticky;
+                    transform: translateX(-21%) translateY(10%);
+                    text-align: center;
                 }
             </style>
             <script>
@@ -49,15 +48,20 @@ def index():
         </head>
         <body>
             <div class="container" id="app">
-                <div class="row">
-                    <div class="col-md-offset-11">
-                        <br>
-                        <h2>看看是谁这么幸运？</h2>
-                        <div class="center-v">
-                            <span v-html="result"></span>
-                        </div>
+                <div class="fixed-top">
+                    <br>
+                    <h2>&emsp;&emsp;看看是谁这么幸运？</h2>
+                    <div class="center-v">
+                        <br><br><br>
+                        <span v-html="result"></span>
                     </div>
-                    <div class="col-md-offset-1">
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        &nbsp;&nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-5">
                         <br>
                         <h4>&nbsp;&nbsp;中奖列表：</h4>
                         <strong>
@@ -67,14 +71,12 @@ def index():
                     </div>
                 </div>
                 <div class="fixed-bottom">
-                    <div class="col-md-offset-8">
-                        &nbsp;&nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                        <button class="btn btn-primary" @click="clickButton">{{button_text}}</button>
-                        &nbsp;&nbsp;
-                        <button class="btn btn-danger" onclick="location.reload();">刷新页面</button>
-                        <br>
-                        &nbsp;
-                    </div>
+                    &nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                    <button class="btn btn-primary" @click="clickButton">{{button_text}}</button>
+                    &nbsp;&nbsp;
+                    <button class="btn btn-danger" onclick="location.reload();">刷新页面</button>
+                    <br>
+                    &nbsp;
                 </div>
             </div>
             <script>
@@ -111,7 +113,7 @@ def index():
                             this.roll_call_array = Array.from(roll_call.keys());
                             this.timer = setInterval(() => {
                                 if (this.roll_call_array.length == 0) {
-                                    this.result = "<h5>所有成员都已经中过奖了！</h5>";
+                                    this.result = "<h4>&nbsp;&nbsp;所有成员都已经中过奖了！</h4>";
                                 } else {
                                     this.selected = this.roll_call_array[Math.floor(Math.random() * this.roll_call_array.length)];
                                     this.result = "<h1>" + roll_call.get(this.selected) + "</h1>";
